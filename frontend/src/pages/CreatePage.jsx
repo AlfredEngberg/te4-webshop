@@ -2,7 +2,6 @@ import { Box, Button, Container, Heading, Input, useColorModeValue, useToast, VS
 import { useState } from "react";
 import { useProductStore } from "../store/product";
 import { set } from "mongoose";
-// import { useProductStore } from "../store/product";
 
 const CreatePage = () => {
     const [newProduct, setNewProduct] = useState({
