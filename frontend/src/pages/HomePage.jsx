@@ -46,7 +46,7 @@ const HomePage = () => {
 
 
         {products.length === 0 && (
-          <Text fontSize='x1' TextAlign={"center"} fontWeight='bold' color='gray.500'>
+          <Text fontSize='xl' TextAlign={"center"} fontWeight='bold' color='gray.500'>
             No products available{" "}
             <Link to={"/create"}>
               <Text as='span' color='blue.500' _hover={{ textDecoration: "underline" }}>
