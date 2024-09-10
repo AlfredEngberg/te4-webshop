@@ -13,7 +13,7 @@ const HomePage = () => {
   console.log("Products:", products);
 
   return (
-    <Container mawxW='container.x1' py={12}>
+    <Container mawxW='container.xl' py={12}>
       <VStack spacing={8}>
 
 
