@@ -84,6 +84,8 @@ const ProductCard = ({ product }) => {
 			transition='all 0.3s'
 			_hover={{ transform: "translateY(-5px)", shadow: "xl" }}
 			bg={bg}
+			as='a'
+			href={`/product/${product._id}`}
 		>
 			<Image src={product.image} alt={product.name} h={48} w='full' objectFit='cover' />
 
