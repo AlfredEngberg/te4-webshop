@@ -11,13 +11,10 @@ const ViewProductPage = () => {
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
-  console.log("Products:", products);
 
   const location = useLocation();
-  console.log("Location:", location);
 
   const id = location.pathname.split("/")[2];
-  console.log("ID:", id);
 
   var product = {};
 
@@ -27,7 +24,6 @@ const ViewProductPage = () => {
       product = currentProduct;
     }
   }
-  console.log("Product:", product);
 
 
 

@@ -1,32 +1,22 @@
 import {
+    chakra,
     Box,
     Button,
     Heading,
+    useToast,
     HStack,
     Stack,
-    IconButton,
     Image,
-    Input,
-    Modal,
-    Chakra,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    FormControl,
-    FormLabel,
-    FormErrorMessage,
-    FormHelperText,
-    ModalFooter,
     useRadioGroup,
     useRadio,
-    Radio,
-    ModalHeader,
-    ModalOverlay,
     Text,
     useColorModeValue,
-    useDisclosure,
-    useToast,
     VStack,
+    Select,
+    MenuItemOption,
+    MenuGroup,
+    MenuOptionGroup,
+    MenuDivider,
     Tabs,
     TabList,
     TabPanels,
@@ -39,8 +29,9 @@ import {
     NumberDecrementStepper,
 } from "@chakra-ui/react";
 import { ChakraProvider } from '@chakra-ui/react'
+import { set } from "mongoose";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
-
+import { useState } from "react";
 
 
 const ProductDetails = ({ product }) => {
@@ -57,7 +48,7 @@ const ProductDetails = ({ product }) => {
                 <input {...getInputProps({})} hidden />
                 <Box
                     {...getRadioProps()}
-                    bg={state.isChecked ? 'green.200' : 'transparent'}
+                    bg={state.isChecked ? 'blue.200' : 'transparent'}
                     w={12}
                     p={1}
                     rounded='full'
@@ -68,19 +59,33 @@ const ProductDetails = ({ product }) => {
         )
     }
 
+
+
     const colors = [
-        { name: 'röd', image: 'https://randomuser.me/api/portraits/women/44.jpg' },
-        { name: 'grön', image: 'https://randomuser.me/api/portraits/men/86.jpg' },
-        { name: 'blå', image: 'https://randomuser.me/api/portraits/men/29.jpg' },
-        { name: 'gul', image: 'https://randomuser.me/api/portraits/women/95.jpg' },
+        { name: 'röd', image: 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Upsdell_red-Colour_Box.png' },
+        { name: 'grön', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Color-Green.JPG/640px-Color-Green.JPG' },
+        { name: 'blå', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Color-blue.JPG/640px-Color-blue.JPG' },
+        { name: 'gul', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Color-yellow.JPG/640px-Color-yellow.JPG' },
     ]
 
+    const [imageColor, setImageColor] = useState(product.imageRed);
+
     const handleChange = (value) => {
-        toast({
-            title: `The value got changed to ${value}!`,
-            status: 'success',
-            duration: 2000,
-        })
+        console.log("value har ändrats till:", value)
+
+
+        if (value == 'röd') {
+            setImageColor(product.imageRed)
+
+        } else if (value == 'grön') {
+            setImageColor(product.imageGreen);
+
+        } else if (value == 'blå') {
+            setImageColor(product.imageBlue);
+
+        } else if (value == 'gul') {
+            setImageColor(product.imageYellow);
+        }
     }
 
     const { value, getRadioProps, getRootProps } = useRadioGroup({
@@ -88,6 +93,10 @@ const ProductDetails = ({ product }) => {
         onChange: handleChange,
     })
 
+    const toast = useToast();
+
+    let selectedColor = value;
+    console.log("selected color:", selectedColor)
 
 
     return (
@@ -96,94 +105,113 @@ const ProductDetails = ({ product }) => {
             bg={bg}
             p={35}
         >
-            <HStack> // Titeln
+            <HStack>
                 <VStack align="start">
                     <Heading as='h1' size="3xl" color={textColor}>
                         {product.name}
                     </Heading>
-
-                    <HStack> // Bilderna
-                        <Tabs defaultIndex={1}>
-                            <TabPanels>
-                                <TabPanel>
-                                    <Image
-                                        boxSize='200px'
-                                        fit='cover'
-                                        src=''
-                                    />
-                                </TabPanel>
-                                <TabPanel>
-                                    <Image
-                                        boxSize='200px'
-                                        fit='cover'
-                                        src=''
-                                    />
-                                </TabPanel>
-                            </TabPanels>
-                            <TabList>
-                                <Tab>Naruto</Tab>
-                                <Tab>Sasuke</Tab>
-                            </TabList>
-                        </Tabs>
-                    </HStack>
-
-                    <Text color={textColor} fontSize={'4xl'}>
-                        Pris: {product.price}:-
-                    </Text>
-
-
-                    // Färg
-                    <HStack>
-                        <Text>
-                            Färg:
-                        </Text>
-                        <Stack {...getRootProps()}>
-                            <Text>The selected radio is: {value}</Text>
-                            <HStack>
-                                {colors.map((colors) => {
-                                    return (
-                                        <CustomRadio
-                                            key={colors.name}
-                                            image={colors.image}
-                                            {...getRadioProps({ value: colors.name })}
-                                        />
-                                    )
-                                })}
-                            </HStack>
-                        </Stack>
-                    </HStack>
-
-                    // antal
-                    <HStack>
-                        <Text>
-                            Antal:
-                        </Text>
-                        <NumberInput defaultValue={1} min={1} max={5}>
-                            <NumberInputField />
-                            <NumberInputStepper>
-                                <NumberIncrementStepper />
-                                <NumberDecrementStepper />
-                            </NumberInputStepper>
-                        </NumberInput>
-                    </HStack>
-
-                        // Lägg till i varukorgen
-                    <Box boxSize={'250px'}>
-                        <HStack spacing={4} bg={bg}>
-                            <Button>
-                                <Text>
-                                    Lägg till i varukorgen
-                                </Text>
-                                <MdOutlineAddShoppingCart size={'28px'} />
-                            </Button>
-                        </HStack>
-                        <Text p={4} w={'full'}>
-                            {product.description}
-                        </Text>
-                    </Box>
                 </VStack>
             </HStack>
-        </Box>
+
+            <HStack>
+                <Image
+                    boxSize='200px'
+                    fit='cover'
+                    src={imageColor}
+                />
+
+                {/*  <Tabs defaultIndex={0}>
+                    <TabPanels>
+                        <TabPanel>
+                            <Image
+                                boxSize='200px'
+                                fit='cover'
+                                src={imageColor}
+                            />
+                        </TabPanel>
+                        <TabPanel>
+                            <Image
+                                boxSize='200px'
+                                fit='cover'
+                                src=''
+                            />
+                        </TabPanel>
+                    </TabPanels>
+                    <TabList>
+                        <Tab>Bild 1</Tab>
+                        <Tab>Bild 2</Tab>
+                    </TabList>
+                </Tabs> */}
+            </HStack>
+
+
+
+            <Text color={textColor} fontSize={'4xl'} p={3}>
+                Pris: {product.price}:-
+            </Text>
+
+
+
+            <HStack p={3}>
+                <Text>
+                    Färg:
+                </Text>
+                <Stack {...getRootProps()}>
+                    <Text>The selected radio is: {value}</Text>
+                    <HStack>
+                        {colors.map((colors) => {
+                            return (
+                                <CustomRadio
+                                    key={colors.name}
+                                    image={colors.image}
+                                    {...getRadioProps({ value: colors.name })}
+                                />
+                            )
+                        })}
+                    </HStack>
+                </Stack>
+            </HStack>
+
+            <HStack>
+                <Select>
+                    <option value='XS'>XS</option>
+                    <option value='S'>S</option>
+                    <option value='M'>M</option>
+                    <option value='L'>L</option>
+                    <option value='XL'>XL</option>
+                </Select>
+            </HStack>
+
+            <HStack p={3}>
+                <Text>
+                    Antal:
+                </Text>
+                <NumberInput defaultValue={1} min={1} max={5}>
+                    <NumberInputField />
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
+            </HStack>
+
+
+
+            <Box boxSize={'250px'} p={3}>
+                <HStack spacing={4} bg={bg}>
+                    <Button /* onClick={handleAddToCart} */>
+                        <Text>
+                            Lägg till i varukorgen
+                        </Text>
+                        <MdOutlineAddShoppingCart size={'28px'} />
+                    </Button>
+                </HStack>
+                <Text p={4} w={'full'}>
+                    {product.description}
+                </Text>
+            </Box>
+
+        </Box >
     );
 }
 export default ProductDetails;
