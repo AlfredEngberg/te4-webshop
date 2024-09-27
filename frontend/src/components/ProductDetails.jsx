@@ -13,25 +13,16 @@ import {
     useColorModeValue,
     VStack,
     Select,
-    MenuItemOption,
-    MenuGroup,
-    MenuOptionGroup,
-    MenuDivider,
-    Tabs,
-    TabList,
-    TabPanels,
-    Tab,
-    TabPanel,
     NumberInput,
     NumberInputField,
     NumberInputStepper,
     NumberIncrementStepper,
     NumberDecrementStepper,
 } from "@chakra-ui/react";
-import { ChakraProvider } from '@chakra-ui/react'
-import { set } from "mongoose";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { useState } from "react";
+
+
 
 
 const ProductDetails = ({ product }) => {
@@ -58,8 +49,6 @@ const ProductDetails = ({ product }) => {
             </chakra.label>
         )
     }
-
-
 
     const colors = [
         { name: 'röd', image: 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Upsdell_red-Colour_Box.png' },
@@ -119,36 +108,15 @@ const ProductDetails = ({ product }) => {
                     fit='cover'
                     src={imageColor}
                 />
-
-                {/*  <Tabs defaultIndex={0}>
-                    <TabPanels>
-                        <TabPanel>
-                            <Image
-                                boxSize='200px'
-                                fit='cover'
-                                src={imageColor}
-                            />
-                        </TabPanel>
-                        <TabPanel>
-                            <Image
-                                boxSize='200px'
-                                fit='cover'
-                                src=''
-                            />
-                        </TabPanel>
-                    </TabPanels>
-                    <TabList>
-                        <Tab>Bild 1</Tab>
-                        <Tab>Bild 2</Tab>
-                    </TabList>
-                </Tabs> */}
             </HStack>
+
 
 
 
             <Text color={textColor} fontSize={'4xl'} p={3}>
                 Pris: {product.price}:-
             </Text>
+
 
 
 
@@ -172,6 +140,9 @@ const ProductDetails = ({ product }) => {
                 </Stack>
             </HStack>
 
+
+
+
             <HStack>
                 <Select>
                     <option value='XS'>XS</option>
@@ -181,6 +152,9 @@ const ProductDetails = ({ product }) => {
                     <option value='XL'>XL</option>
                 </Select>
             </HStack>
+
+
+
 
             <HStack p={3}>
                 <Text>
